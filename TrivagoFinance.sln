@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. TrivagoFinance.Data", "1. TrivagoFinance.Data", "{C57A6675-B811-4A77-8CD6-81E6A462AE3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. TrivagoFinance.Repository", "2. TrivagoFinance.Repository", "{9CD6BE90-8032-4E29-8D6E-68A02AF5816A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. TrivagoFinance.Service", "3. TrivagoFinance.Service", "{9E9A6937-3408-4972-928D-78F4EE6B4CE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. TrivagoFinance.Core", "0. TrivagoFinance.Core", "{CE9496D6-4190-41D4-BBB9-89BF16B5A465}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. TrivagoFinance.UI", "4. TrivagoFinance.UI", "{F8574275-CEA3-42A3-ADC1-88B305F10723}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Data", "TrivagoFinance.Data\TrivagoFinance.Data.csproj", "{17EFB8F0-8283-4F61-BAF5-E593DF76255C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Repository", "TrivagoFinance.Repository\TrivagoFinance.Repository.csproj", "{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Ui", "TrivagoFinance.Ui\TrivagoFinance.Ui.csproj", "{33B41B93-FEA3-406D-89C0-EC1012C74BFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Service", "TrivagoFinance.Service\TrivagoFinance.Service.csproj", "{34362015-44D0-489B-AD3F-F7B864B9EF8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17EFB8F0-8283-4F61-BAF5-E593DF76255C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17EFB8F0-8283-4F61-BAF5-E593DF76255C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17EFB8F0-8283-4F61-BAF5-E593DF76255C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17EFB8F0-8283-4F61-BAF5-E593DF76255C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33B41B93-FEA3-406D-89C0-EC1012C74BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33B41B93-FEA3-406D-89C0-EC1012C74BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33B41B93-FEA3-406D-89C0-EC1012C74BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33B41B93-FEA3-406D-89C0-EC1012C74BFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34362015-44D0-489B-AD3F-F7B864B9EF8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34362015-44D0-489B-AD3F-F7B864B9EF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34362015-44D0-489B-AD3F-F7B864B9EF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34362015-44D0-489B-AD3F-F7B864B9EF8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{17EFB8F0-8283-4F61-BAF5-E593DF76255C} = {C57A6675-B811-4A77-8CD6-81E6A462AE3C}
+		{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC} = {9CD6BE90-8032-4E29-8D6E-68A02AF5816A}
+		{33B41B93-FEA3-406D-89C0-EC1012C74BFB} = {F8574275-CEA3-42A3-ADC1-88B305F10723}
+		{34362015-44D0-489B-AD3F-F7B864B9EF8A} = {9E9A6937-3408-4972-928D-78F4EE6B4CE6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35DB6F78-82F1-40DF-A1F3-77C8110EBBDB}
+	EndGlobalSection
+EndGlobal

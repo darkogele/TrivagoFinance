@@ -1,0 +1,29 @@
+﻿@model UserVIewModel
+@{
+    ViewData["Title"] = "Trivago Finance";
+}
+<h3 style="text-align:center">Travel Expense Submision</h3>
+<div>
+    <form asp-action="EmployeeLoged" asp-controller="User" method="post">
+
+        <div class="form-group row">
+            <label for="inputEmail">Email</label>
+            <input asp-for="Email" type="email" class="form-control" id="inputEmail" placeholder="Email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputPassword">Password</label>
+            <input asp-for="Password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        @*<div class="form-group">
+                <label class="form-check-label"><input type="checkbox">Remember me</label>
+            </div>*@
+
+        <div class="form-group row">
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </div>
+
+    </form>
+</div>

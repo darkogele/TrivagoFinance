@@ -11,10 +11,10 @@ namespace TrivagoFinance.Ui.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserService _userService;            
+        private readonly IUserService _userService;
         public UserController(IUserService userService)
         {
-            _userService = userService;               
+            _userService = userService;
         }
 
         public IActionResult Employee()
@@ -24,13 +24,22 @@ namespace TrivagoFinance.Ui.Controllers
 
         [HttpGet]
         public IActionResult CreateEmployee()
-        {
+        {           
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateEmployee(UserVIewModel userVIewModel)
         {
+            if (ModelState.IsValid)
+            {
+                var user = _userService.Insert(userVIewModel);
+                if (user != null)
+                {
+                    TempData["NewUser"] = "New User Created";
+                    RedirectToAction("Details", user.Id);
+                }
+            }
             return View();
         }
 
@@ -58,7 +67,7 @@ namespace TrivagoFinance.Ui.Controllers
         [HttpPost]
         public IActionResult TeamLead(bool approvedStatus)
         {
-            
+
             return View();
         }
 
@@ -81,13 +90,9 @@ namespace TrivagoFinance.Ui.Controllers
         [HttpPost]
         public IActionResult UploadPhoto(UserVIewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                _userService.UploadPhoto(model);
-               
-            }
+            _userService.UploadPhoto(model);
             return View(model); // Sjebano View
         }
-     
+
     }
 }

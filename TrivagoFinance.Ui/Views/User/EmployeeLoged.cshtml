@@ -1,7 +1,7 @@
 ﻿@model TrivagoFinance.Ui.ViewModels.UserVIewModel
 @{
-    ViewData["Title"] = "EmployeeLoged";
-    var LeadData = ViewBag.LeadData;
+    ViewData["Title"] = "EmployeeLoged"; 
+    var photoPath = Url.Content("~/images/users/" + (Model.PhotoPath ?? "noimage.jpg"));
 }
 
 <div class="row" style="text-align:center">
@@ -15,7 +15,7 @@
         @if (Model.UserRole == TrivagoFinance.Ui.ViewModels.UserRoles.Employee)
         {
             <h3>Upload Photo</h3>
-            <img src="~/images/image.png" class="rounded img-fluid" />
+            <img src="@photoPath" class="rounded img-fluid"  asp-append-version="true"/>
             <form enctype="multipart/form-data" asp-action="UploadPhoto" asp-controller="User" method="post" class="mt-3">
                 <input type="hidden" asp-for="Id" />
                 <div class="custom-file">

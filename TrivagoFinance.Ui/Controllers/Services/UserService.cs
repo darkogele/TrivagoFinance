@@ -13,11 +13,12 @@ namespace TrivagoFinance.Ui.Controllers.Services
 {
     public interface IUserService
     {
-        User LogIn(string email, string password);
+        UserVIewModel LogIn(string email, string password);
         IEnumerable<User> GetAllEmployees();
         UserVIewModel Update(UserVIewModel user);
         UserVIewModel GetEmployee(int id);
         bool UploadPhoto(UserVIewModel user);
+        UserVIewModel Insert(UserVIewModel user);
     }
 
     public class UserService : IUserService
@@ -48,10 +49,12 @@ namespace TrivagoFinance.Ui.Controllers.Services
             return null;
         }
 
-        public User LogIn(string email, string password)
+        public UserVIewModel LogIn(string email, string password)
         {
             var passwordHash = SHA256HashGenerator.GenerateHash(password);
-            return _trivagoSqlRepository.GetUsersByEmailAndPassword(email, passwordHash);
+            var userFromDb = _trivagoSqlRepository.GetUsersByEmailAndPassword(email, passwordHash);
+            var userForView = _mapper.Map<UserVIewModel>(userFromDb);
+            return userForView;
         }
 
         public UserVIewModel Update(UserVIewModel UserVIewModel)
@@ -101,6 +104,11 @@ namespace TrivagoFinance.Ui.Controllers.Services
                 }
             }
             return contains;
+        }
+
+        public UserVIewModel Insert(UserVIewModel user) // TODO Create on User
+        {
+            throw new NotImplementedException();
         }
 
 

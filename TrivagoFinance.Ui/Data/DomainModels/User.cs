@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TrivagoFinance.Ui.ViewModels;
 
-namespace TrivagoFinance.Ui.Models
+namespace TrivagoFinance.Ui.Data.DomainModels
 {
-    public class UserVIewModel
+    public class User
     {
         [Key]
         public int Id { get; set; }
@@ -15,17 +15,10 @@ namespace TrivagoFinance.Ui.Models
         public string FirstName { get; set; }
         [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid email format")]
         public string Email { get; set; }
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public string LastName { get; set; }
-        public UserRoles UserRole { get; set; }
-        public IFormFile Photo { get; set; }
+        public UserRoles UserRole { get; set; }        
         public string PhotoPath { get; set; }
-    }
-
-    public enum UserRoles
-    {
-        Employee = 1,
-        TeamLead = 2,
-        Finance = 3
+        public bool AproveStatus { get; set; }
     }
 }

@@ -1,0 +1,35 @@
+﻿@model TrivagoFinance.Ui.ViewModels.UserVIewModel
+
+@{
+    ViewData["Title"] = "Details Page";
+    var photoPath = Url.Content("~/images/users/" + (Model.PhotoPath ?? "noimage.jpg"));
+}
+
+<h1>Details</h1>
+
+<Div class="row justify-content-center m-2">
+    <div class="col">
+        <div class="card">
+
+            <div class="card-header">
+                <h1>@Model.FirstName</h1>
+            </div>
+
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@photoPath" asp-append-version="true" />
+                <h4>Email: @Model.Email</h4>
+                <h4>lastname: @Model.LastName</h4>
+                <h4>Department : @Model.UserRole</h4>
+            </div>
+
+            <div class="card-footer text-center">
+                <form action="/" method="post">
+                    <input type="checkbox" asp-for="AproveStatus" asp-action="TeamLead" asp-controller="User" value="Approve" />
+                    <input type="hidden" asp-for="@Model.Id" value="" />
+                    <button type="submit" class="btn btn-primary"></button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</Div>

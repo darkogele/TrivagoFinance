@@ -1,6 +1,6 @@
 using System;
 
-namespace TrivagoFinance.Ui.Models
+namespace TrivagoFinance.Ui.ViewModels
 {
     public class ErrorViewModel
     {

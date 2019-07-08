@@ -4,40 +4,77 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TrivagoFinance.Ui.Models;
-using TrivagoFinance.Ui.MokapData;
-using Microsoft.AspNetCore.Hosting;
+using TrivagoFinance.Ui.ViewModels;
+using TrivagoFinance.Ui.Controllers.Services;
 
 namespace TrivagoFinance.Ui.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IEmployeeRepository _mockEmployeeRepository;
-        private readonly IHostingEnvironment hostingEnvironment;
-        public UserController(IEmployeeRepository mockEmployeeRepository, IHostingEnvironment hostingEnvironment)
+        private readonly IUserService _userService;            
+        public UserController(IUserService userService)
         {
-            _mockEmployeeRepository = mockEmployeeRepository;
-            this.hostingEnvironment = hostingEnvironment;
+            _userService = userService;               
         }
 
         public IActionResult Employee()
-        {           
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult CreateEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateEmployee(UserVIewModel userVIewModel)
+        {
             return View();
         }
 
         [HttpPost]
         public IActionResult EmployeeLoged(string email, string password)
         {
-            var user = _mockEmployeeRepository.GetUsersByEmailAndPassword(email, password);
+            var user = _userService.LogIn(email, password);
+            if (user.UserRole == UserRoles.TeamLead)
+            {
+                return RedirectToAction("TeamLead");
+            }
             if (user == null)
             {
-               return RedirectToAction("WrongCredential");
+                return RedirectToAction("WrongCredential");
+            }
+            return View(user);
+        }
+
+        public IActionResult TeamLead()
+        {
+            var users = _userService.GetAllEmployees();
+            return View(users);
+        }
+
+        [HttpPost]
+        public IActionResult TeamLead(bool approvedStatus)
+        {
+            
+            return View();
+        }
+
+        public IActionResult Details(int id)
+        {
+            var user = _userService.GetEmployee(id);
+            if (user == null)
+            {
+                Response.StatusCode = 404;
+                return View("EmployeeNotFound", id);
             }
             return View(user);
         }
 
         public IActionResult WrongCredential()
-        {          
+        {
             return View();
         }
 
@@ -46,47 +83,11 @@ namespace TrivagoFinance.Ui.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.PhotoPath = ProcesUploadedFile(model);
-                _mockEmployeeRepository.Insert(model);
-                ViewBag.PhotoDone = true;
-            }          
-            return View(model);
-        }
-
-
-        #region Private Methods
-
-        private string ProcesUploadedFile(UserVIewModel model)
-        {
-            string uniqieFileName = null;
-            if (model.Photo != null && ValidationForOnlyImage(model.Photo.FileName))
-            {
-                var uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + @"\images\Users");
-                uniqieFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
-                var filePath = Path.Combine(uploadsFolder, uniqieFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.Photo.CopyTo(fileStream);
-                }
+                _userService.UploadPhoto(model);
+               
             }
-            return uniqieFileName;
+            return View(model); // Sjebano View
         }
-
-        private static bool ValidationForOnlyImage(string file)
-        {
-            string[] imageTypes = { "jpg", "bmp", "gif", "png" };
-            bool contains = false;
-            foreach (var type in imageTypes)
-            {
-                contains = file.Contains(type);
-                if (contains)
-                {
-                    return contains;
-                }
-            }
-            return contains;
-        }
-
-        #endregion
+     
     }
 }

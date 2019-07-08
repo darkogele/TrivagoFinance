@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrivagoFinance.Ui.Models;
+using TrivagoFinance.Ui.Data.DomainModels;
 
 namespace TrivagoFinance.Ui.MokapData
 {
     public interface IEmployeeRepository
     {
-        UserVIewModel GetEmployee(int Id);       
-        IEnumerable<UserVIewModel> GetAllEmployees();
-        UserVIewModel Insert(UserVIewModel employee);
-        UserVIewModel Update(UserVIewModel employeeChanges);
-        UserVIewModel Delete(int Id);
-        UserVIewModel GetUsersByEmailAndPassword(string email, string password);
+        User GetEmployee(int Id);
+        IEnumerable<User> GetAllEmployees();
+        User Insert(User employee);
+        User Update(User employeeChanges);
+        User Delete(int Id);
+        User GetUsersByEmailAndPassword(string email, string password);
     }
 }

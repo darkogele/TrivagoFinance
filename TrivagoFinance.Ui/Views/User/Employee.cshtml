@@ -1,29 +1,76 @@
-﻿@model UserVIewModel
+﻿@model TrivagoFinance.Ui.ViewModels.UserVIewModel
 @{
     ViewData["Title"] = "Trivago Finance";
 }
-<h3 style="text-align:center">Travel Expense Submision</h3>
-<div>
-    <form asp-action="EmployeeLoged" asp-controller="User" method="post">
+<h3 style="text-align:center">Travel Expense</h3>
+<div class="row">
+    <div class="col-5">
+        <form asp-action="EmployeeLoged" asp-controller="User" method="post">
 
-        <div class="form-group row">
-            <label for="inputEmail">Email</label>
-            <input asp-for="Email" type="email" class="form-control" id="inputEmail" placeholder="Email">
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
+            <div class="form-group row">
+                <label for="inputEmail">Email</label>
+                <input asp-for="Email" type="email" class="form-control" id="inputEmail" placeholder="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
 
-        <div class="form-group row">
-            <label for="inputPassword">Password</label>
-            <input asp-for="Password" type="password" class="form-control" id="inputPassword" placeholder="Password">
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        @*<div class="form-group">
-                <label class="form-check-label"><input type="checkbox">Remember me</label>
-            </div>*@
+            <div class="form-group row">
+                <label for="inputPassword">Password</label>
+                <input asp-for="Password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                    <label class="form-check-label"><input type="checkbox">Remember me</label>
+                </div>*@
 
-        <div class="form-group row">
-            <button type="submit" class="btn btn-primary">Log in</button>
-        </div>
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-5">
+        <form asp-action="CreateEmployee" asp-controller="Users" method="post">
+
+            <div class="form-group row">
+                <label for="inputEmail">Email</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputEmail">Firstname</label>
+                <input asp-for="FirstName" type="text" class="form-control" placeholder="Firstname">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputEmail">Lastname</label>
+                <input asp-for="LastName" type="text" class="form-control" placeholder="Lastname">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputEmail">Password</label>
+                <input asp-for="Password" type="text" class="form-control" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputEmail">Lastname</label>
+                <input asp-for="ConfirmPassword" type="text" class="form-control" placeholder="ConfirmPassword">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <select asp-for="UserRole" asp-items="Html.GetEnumSelectList<UserRoles>()" class="form-control">
+                    <option value="0">Please select Role</option>
+                </select>
+            </div>
+            <div class="form-group row">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            
+        </form>
+    </div>
 </div>

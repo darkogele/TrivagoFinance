@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TrivagoFinance.Ui.Controllers.Services;
+using TrivagoFinance.Ui.Data;
+using TrivagoFinance.Ui.Data.Repository;
 using TrivagoFinance.Ui.MokapData;
 
 namespace TrivagoFinance.Ui
@@ -25,7 +30,10 @@ namespace TrivagoFinance.Ui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IEmployeeRepository, MockEmployeeRepository>(); // Di 
+           
+            services.AddDbContextPool<TrivagoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TrivagoData")));// Conection String Found in Appsettings.json
+            services.AddScoped<IEmployeeRepository, TrivagoSqlRepository>(); // Dependency injection
+            services.AddScoped<IUserService, UserService>(); 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -33,6 +41,13 @@ namespace TrivagoFinance.Ui
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Auto mapper config
+            var mappingConfig = new MapperConfiguration(x =>
+            {
+                x.AddProfile(new MappingProfile());
+            });
+            var mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

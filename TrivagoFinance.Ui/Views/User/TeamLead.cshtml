@@ -1,0 +1,25 @@
+﻿@model  IEnumerable<TrivagoFinance.Ui.ViewModels.UserVIewModel>
+@{
+    ViewData["Title"] = "Team Lead View";
+}
+
+<h1>TeamLead</h1>
+
+<div class="">
+    <div class="card-deck">
+        @foreach (var employee in Model)
+        {
+            var imagePath = Url.Content("~/images/users/" + (employee.PhotoPath ?? "noimage.jpg"));
+            <div class="card m-3" style="min-width: 18rem; max-width:30.5%">
+                <div class="card-header">
+                    <h3>@employee.FirstName</h3>
+                </div>
+                <img class="card-img-top imageThumbnail" src="@imagePath" asp-append-version="true" />
+                <div class="card-footer text-center">
+                    <a asp-controller="User" asp-action="Details" asp-route-id="@employee.Id" asp-for class="btn btn-primary m-1">Approve</a> 
+                    @*<a asp-controller="User" asp-action="" asp-route-id="@employee.Id" class="btn btn-danger m-1">Decline</a>*@                   
+                </div>
+            </div>
+        }
+    </div>
+</div>

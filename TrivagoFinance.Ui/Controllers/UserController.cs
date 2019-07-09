@@ -22,52 +22,61 @@ namespace TrivagoFinance.Ui.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult CreateEmployee()
-        {           
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult CreateEmployee()
+        //{           
+        //    return View();
+        //}
 
         [HttpPost]
         public IActionResult CreateEmployee(UserVIewModel userVIewModel)
         {
             if (ModelState.IsValid)
             {
-                var user = _userService.Insert(userVIewModel);
-                if (user != null)
+                var cheekforDuplicate = _userService.Duplicate(userVIewModel.Email);
+                if (cheekforDuplicate == false)
                 {
-                    TempData["NewUser"] = "New User Created";
-                    RedirectToAction("Details", user.Id);
+                    var user = _userService.Insert(userVIewModel);
+                    if (user != null)
+                    {
+                        TempData["NewUser"] = "New User Created";
+                        return RedirectToAction("Details", user.Id);
+                    }
                 }
+                TempData["Error"] = "You are entering existing email address try with different one";
+                return View("Employee");
             }
-            return View();
+            var error =  ModelState.Values.SelectMany(x => x.Errors).FirstOrDefault();
+            TempData["Error"] = error != null ? error.ErrorMessage : "";
+            return View("Employee");
         }
 
         [HttpPost]
         public IActionResult EmployeeLoged(string email, string password)
         {
             var user = _userService.LogIn(email, password);
-            if (user.UserRole == UserRoles.TeamLead)
-            {
-                return RedirectToAction("TeamLead");
-            }
             if (user == null)
             {
                 return RedirectToAction("WrongCredential");
             }
+            if (user.UserRole == UserRoles.TeamLead)
+            {
+                return RedirectToAction("TeamLead", user);
+            }
+           
             return View(user);
         }
 
-        public IActionResult TeamLead()
+        public IActionResult TeamLead(UserVIewModel lead)
         {
-            var users = _userService.GetAllEmployees();
+            var users = _userService.GetAllEmployees(lead);
             return View(users);
         }
 
         [HttpPost]
-        public IActionResult TeamLead(bool approvedStatus)
+        public IActionResult TeamLeadApproval(UserVIewModel employee)
         {
-
+           var status = _userService.ApproveStatus(employee);
             return View();
         }
 
@@ -90,8 +99,8 @@ namespace TrivagoFinance.Ui.Controllers
         [HttpPost]
         public IActionResult UploadPhoto(UserVIewModel model)
         {
-            _userService.UploadPhoto(model);
-            return View(model); // Sjebano View
+            ViewBag.PhotoDone = _userService.UploadPhoto(model);
+            return View(model); //TO-DO Da birse stara slika
         }
 
     }

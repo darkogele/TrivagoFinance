@@ -1,8 +1,13 @@
 ﻿@model TrivagoFinance.Ui.ViewModels.UserVIewModel
 @{
     ViewData["Title"] = "Trivago Finance";
+    var error = TempData["Error"];
 }
 <h3 style="text-align:center">Travel Expense</h3>
+@if (error != null && error.ToString() != "")
+{
+    <h3 style="text-align:center" class="text-danger">@error</h3>
+}
 <div class="row">
     <div class="col-5">
         <form asp-action="EmployeeLoged" asp-controller="User" method="post">
@@ -30,7 +35,7 @@
     </div>
     <div class="col-2"></div>
     <div class="col-5">
-        <form asp-action="CreateEmployee" asp-controller="Users" method="post">
+        <form asp-action="CreateEmployee" asp-controller="User" method="post">
 
             <div class="form-group row">
                 <label for="inputEmail">Email</label>
@@ -66,6 +71,7 @@
                 <select asp-for="UserRole" asp-items="Html.GetEnumSelectList<UserRoles>()" class="form-control">
                     <option value="0">Please select Role</option>
                 </select>
+                <span asp-validation-for="UserRole" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <button type="submit" class="btn btn-primary">Register</button>

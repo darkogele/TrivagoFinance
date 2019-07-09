@@ -14,5 +14,7 @@ namespace TrivagoFinance.Ui.MokapData
         User Update(User employeeChanges);
         User Delete(int Id);
         User GetUsersByEmailAndPassword(string email, string password);
+        bool CheekForExistingEmail(string email);
+        bool EmployeeStatus(bool status, int id);
     }
 }

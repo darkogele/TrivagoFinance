@@ -65,5 +65,15 @@ namespace TrivagoFinance.Ui.MokapData
         {
             return _users.Where(x => x.Email == email.ToLower() && x.PasswordHash == password).FirstOrDefault();
         }
+
+        public bool CheekForExistingEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EmployeeStatus(bool status, int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

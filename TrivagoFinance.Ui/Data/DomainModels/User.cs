@@ -17,7 +17,8 @@ namespace TrivagoFinance.Ui.Data.DomainModels
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string LastName { get; set; }
-        public UserRoles UserRole { get; set; }        
+        public UserRoles UserRole { get; set; }
+        public Department Department { get; set; }
         public string PhotoPath { get; set; }
         public bool AproveStatus { get; set; }
     }

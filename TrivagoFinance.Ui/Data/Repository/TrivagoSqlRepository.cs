@@ -14,6 +14,13 @@ namespace TrivagoFinance.Ui.Data.Repository
         {
             _trivagoDb = trivagoDb;
         }
+
+        public bool CheekForExistingEmail(string email)
+        {
+            var cheek = _trivagoDb.Users.Where(x => x.Email == email).FirstOrDefault();
+            return cheek != null ? true : false;
+        }
+
         public User Delete(int Id)
         {
             var user = _trivagoDb.Users.Find(Id);
@@ -23,6 +30,15 @@ namespace TrivagoFinance.Ui.Data.Repository
                 _trivagoDb.SaveChanges();
             }
             return user;
+        }
+
+        public bool EmployeeStatus(bool status, int id)
+        {
+            var user = _trivagoDb.Users.Find(id);
+            user.AproveStatus = status;
+            _trivagoDb.Users.Update(user);
+            _trivagoDb.SaveChanges();
+            return true;
         }
 
         public IEnumerable<User> GetAllEmployees()

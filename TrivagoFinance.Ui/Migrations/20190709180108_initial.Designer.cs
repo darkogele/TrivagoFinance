@@ -9,8 +9,8 @@ using TrivagoFinance.Ui.Data;
 namespace TrivagoFinance.Ui.Migrations
 {
     [DbContext(typeof(TrivagoDbContext))]
-    [Migration("20190708204833_inital")]
-    partial class inital
+    [Migration("20190709180108_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,8 @@ namespace TrivagoFinance.Ui.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("AproveStatus");
+
+                    b.Property<int>("Department");
 
                     b.Property<string>("Email");
 
@@ -50,17 +52,19 @@ namespace TrivagoFinance.Ui.Migrations
                         {
                             Id = 1,
                             AproveStatus = false,
+                            Department = 9,
                             Email = "darkogele@hotmail.com",
                             FirstName = "Darko",
                             LastName = "Gelevski",
                             PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",
-                            PhotoPath = "bd323643-d2c5-4f80-8d7e-db27716d80b2_dareto.jpg",
+                            PhotoPath = "895d0fe3-076c-4124-8eb9-ab5424175abb_24909662_10157239995384896_4609835183655791985_n.jpg",
                             UserRole = 1
                         },
                         new
                         {
                             Id = 2,
                             AproveStatus = false,
+                            Department = 9,
                             Email = "lead@trivago.com",
                             FirstName = "Lead",
                             LastName = "TeachLeadGuy",
@@ -71,11 +75,36 @@ namespace TrivagoFinance.Ui.Migrations
                         {
                             Id = 3,
                             AproveStatus = false,
+                            Department = 7,
                             Email = "finance@trivago.com",
                             FirstName = "Finance",
                             LastName = "FinanceGuy",
                             PasswordHash = "b696d75511dc16f2b52563e3113a498311a79866f4672862197aa9a8c5c0da12",
                             UserRole = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AproveStatus = false,
+                            Department = 9,
+                            Email = "employee2@trivago.com",
+                            FirstName = "John",
+                            LastName = "Smith",
+                            PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",
+                            PhotoPath = "b8aaa1a4-22fc-4b66-8f9f-a3da69a2de7a_travel_expense_report.png",
+                            UserRole = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AproveStatus = false,
+                            Department = 9,
+                            Email = "employee2@trivago.com",
+                            FirstName = "Rebeka",
+                            LastName = "Week",
+                            PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",
+                            PhotoPath = "b8aaa1a4-22fc-4b66-8f9f-a3da69a2de7a_travel_expense_report.png",
+                            UserRole = 1
                         });
                 });
 #pragma warning restore 612, 618

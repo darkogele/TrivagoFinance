@@ -21,6 +21,8 @@ namespace TrivagoFinance.Ui.ViewModels
         public string LastName { get; set; }
         [Required]
         public UserRoles UserRole { get; set; }
+        [Required]
+        public Department Department { get; set; }
         public IFormFile Photo { get; set; }
         public string PhotoPath { get; set; }
         public bool AproveStatus { get; set; }
@@ -31,5 +33,18 @@ namespace TrivagoFinance.Ui.ViewModels
         Employee = 1,
         TeamLead = 2,
         Finance = 3
+    }
+
+    public enum Department
+    {
+        Services = 1,
+        Training = 2,
+        Marketing = 3,
+        Legal = 4,
+        HumanResources = 5,
+        IT = 6,
+        Accounting = 7,
+        Support = 8,
+        WebDevelopers = 9
     }
 }

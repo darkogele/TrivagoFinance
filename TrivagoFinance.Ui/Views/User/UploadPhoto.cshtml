@@ -3,17 +3,18 @@
     ViewData["Title"] = "UploadPhoto";
 }
 <div class="row">
-    <div class="col">
+    <div class="col" style="text-align:center">
         @if (ViewBag.PhotoDone)
         {
             <h3>Your Photo was uploaded</h3>
-
-            <a class="btn btn-primary" asp-area="" asp-controller="User" asp-action="Employee">Home</a>
+            <p></p>
+            <a class="btn btn-primary" asp-controller="User" asp-action="Employee">Home</a>
         }
         else
         {
             <h3>Your Photo <span style="color:red">Failed</span> to upload</h3>
-            <a class="btn btn-primary" asp-area="" asp-controller="User" asp-action="Employee">Home</a>
+            <p></p>
+            <a class="btn btn-primary" asp-controller="User" asp-action="Employee">Home</a>
         }
     </div>
 </div>

@@ -76,7 +76,8 @@ namespace TrivagoFinance.Ui.Controllers
         [HttpPost]
         public IActionResult TeamLeadApproval(UserVIewModel employee)
         {
-           var status = _userService.ApproveStatus(employee);
+            var status = _userService.ApproveStatus(employee);
+
             return View();
         }
 

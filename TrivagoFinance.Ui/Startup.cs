@@ -48,6 +48,9 @@ namespace TrivagoFinance.Ui
             });
             var mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+            // Mail service
+            services.Configure<EmailConfig>(Configuration.GetSection("Email"));
+            services.AddTransient<IEmailService, EmailService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

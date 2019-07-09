@@ -27,11 +27,14 @@ namespace TrivagoFinance.Ui.Controllers.Services
     {
         private readonly IHostingEnvironment hostingEnvironment;
         private readonly IEmployeeRepository _trivagoSqlRepository;
+        private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
-        public UserService(IMapper mapper, IEmployeeRepository trivagoSqlRepository, IHostingEnvironment hostingEnvironment)
+
+        public UserService(IMapper mapper, IEmployeeRepository trivagoSqlRepository, IHostingEnvironment hostingEnvironment, IEmailService emailService)
         {
             _trivagoSqlRepository = trivagoSqlRepository;
             _mapper = mapper;
+            _emailService = emailService;
             this.hostingEnvironment = hostingEnvironment;
         }
 
@@ -101,7 +104,13 @@ namespace TrivagoFinance.Ui.Controllers.Services
 
         public bool ApproveStatus(UserVIewModel user)
         {
-           return _trivagoSqlRepository.EmployeeStatus(user.AproveStatus, user.Id);
+            var userFromDb = _trivagoSqlRepository.GetEmployee(user.Id);
+            bool emailSent = _emailService.SendEmail(userFromDb.Email, userFromDb.FirstName, "report", "test");
+            if (!emailSent) {
+                return false;
+            }
+
+            return _trivagoSqlRepository.EmployeeStatus(user.AproveStatus, user.Id);
         }
 
 

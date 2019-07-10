@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace TrivagoFinance.Ui.ViewModels
@@ -25,7 +26,8 @@ namespace TrivagoFinance.Ui.ViewModels
         public Department Department { get; set; }
         public IFormFile Photo { get; set; }
         public string PhotoPath { get; set; }
-        public bool AproveStatus { get; set; }
+        [DisplayName("Aproval Status")]
+        public AprovalStatus AprovalStatus { get; set; }
     }
 
     public enum UserRoles
@@ -46,5 +48,12 @@ namespace TrivagoFinance.Ui.ViewModels
         Accounting = 7,
         Support = 8,
         WebDevelopers = 9
+    }
+
+    public enum AprovalStatus
+    {
+        Pending,
+        Declined,
+        Approved
     }
 }

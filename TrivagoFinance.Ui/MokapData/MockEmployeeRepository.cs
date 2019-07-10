@@ -55,7 +55,7 @@ namespace TrivagoFinance.Ui.MokapData
                 user.FirstName = employeeChanges.FirstName;
                 user.LastName = employeeChanges.LastName;
                 user.UserRole = employeeChanges.UserRole;
-                user.AproveStatus = employeeChanges.AproveStatus;
+                user.AprovalStatus = employeeChanges.AprovalStatus;
                 return user;
             }
             return user;
@@ -72,6 +72,11 @@ namespace TrivagoFinance.Ui.MokapData
         }
 
         public bool EmployeeStatus(bool status, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AprovalStatus EmployeeStatus(AprovalStatus status, int id)
         {
             throw new NotImplementedException();
         }

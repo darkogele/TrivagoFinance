@@ -5,11 +5,14 @@ using MimeKit;
 using MimeKit.Text;
 using System;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace TrivagoFinance.Ui.Controllers.Services
 {
-    public interface IEmailService {
+    public interface IEmailService
+    {
         bool SendEmail(string email, string name, string subject, string message);
     }
 
@@ -35,6 +38,13 @@ namespace TrivagoFinance.Ui.Controllers.Services
                 using (var client = new SmtpClient())
                 {
                     //client.LocalDomain = ec.LocalDomain;
+                    client.CheckCertificateRevocation = false;
+
+                // IF you enconter problems with the email sending for SSL or TLS connection remove the comment from the lines bellow;
+                    //client.ServerCertificateValidationCallback = (object sender, 
+                    //    X509Certificate certificate, 
+                    //    X509Chain chain,
+                    //    SslPolicyErrors sslPolicyErrors) => true;
 
                     client.Connect(ec.MailServerAddress, Convert.ToInt32(ec.MailServerPort), SecureSocketOptions.Auto);
                     client.Authenticate(new NetworkCredential(ec.UserId, ec.UserPassword));
@@ -46,7 +56,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message); // TODO implement NLOG
 
                 return false;
             }

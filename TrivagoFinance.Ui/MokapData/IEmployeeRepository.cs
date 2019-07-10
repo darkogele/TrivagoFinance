@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrivagoFinance.Ui.Data.DomainModels;
+using TrivagoFinance.Ui.ViewModels;
 
 namespace TrivagoFinance.Ui.MokapData
 {
@@ -15,6 +16,6 @@ namespace TrivagoFinance.Ui.MokapData
         User Delete(int Id);
         User GetUsersByEmailAndPassword(string email, string password);
         bool CheekForExistingEmail(string email);
-        bool EmployeeStatus(bool status, int id);
+        AprovalStatus EmployeeStatus(AprovalStatus status, int id);
     }
 }

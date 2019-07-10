@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TrivagoFinance.Ui.Data.DomainModels;
 using TrivagoFinance.Ui.MokapData;
+using TrivagoFinance.Ui.ViewModels;
 
 namespace TrivagoFinance.Ui.Data.Repository
 {
@@ -32,13 +33,13 @@ namespace TrivagoFinance.Ui.Data.Repository
             return user;
         }
 
-        public bool EmployeeStatus(bool status, int id)
+        public AprovalStatus EmployeeStatus(AprovalStatus status, int id)
         {
             var user = _trivagoDb.Users.Find(id);
-            user.AproveStatus = status;
+            user.AprovalStatus = status;
             _trivagoDb.Users.Update(user);
             _trivagoDb.SaveChanges();
-            return true;
+            return status;
         }
 
         public IEnumerable<User> GetAllEmployees()

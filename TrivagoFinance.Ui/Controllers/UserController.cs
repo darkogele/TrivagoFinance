@@ -72,12 +72,12 @@ namespace TrivagoFinance.Ui.Controllers
             var users = _userService.GetAllEmployees(lead);
             return View(users);
         }
-
+        // FOCUS
         [HttpPost]
         public IActionResult TeamLeadApproval(UserVIewModel employee)
         {
             var status = _userService.ApproveStatus(employee);
-
+            ViewBag.Status = status;
             return View();
         }
 
@@ -101,7 +101,7 @@ namespace TrivagoFinance.Ui.Controllers
         public IActionResult UploadPhoto(UserVIewModel model)
         {
             ViewBag.PhotoDone = _userService.UploadPhoto(model);
-            return View(model); //TO-DO Da birse stara slika
+            return View(model); 
         }
 
     }

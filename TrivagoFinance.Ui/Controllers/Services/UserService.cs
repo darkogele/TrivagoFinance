@@ -44,15 +44,12 @@ namespace TrivagoFinance.Ui.Controllers.Services
         }
 
         public IEnumerable<UserVIewModel> GetAllEmployees(UserVIewModel user)
-        {
-            // Employees with Photo only they are pending for Approve or Reject
+        {      
             var pendingExpenses = _trivagoSqlRepository.GetPendingExpense();
 
             var usersFromDb = _trivagoSqlRepository.GetAllEmployees()
                 .Where(e => pendingExpenses.Any(p => e.Id == p.UserId)).ToList();
-
-            //var usersForView = _mapper.Map<List<UserVIewModel>>(usersFromDb);
-
+          
             var usersForView = new List<UserVIewModel>();
 
             foreach (var employee in usersFromDb)
@@ -85,8 +82,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
             if (userFromDb == null)
             {
                 return null;
-            }
-            //TODO new lead none underhim
+            }         
             var userDataInExpense = _trivagoSqlRepository.GetAllExpense().Where(e => e.UserId == userFromDb.Id).ToList();                
             if (userDataInExpense == null)
             {
@@ -103,9 +99,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
                 everyPhotoStatus.Add(photoStatus);
             }
             var userForView = _mapper.Map<UserVIewModel>(userFromDb);
-            userForView.PhotoStatus = everyPhotoStatus;
-            //userForView.AllPhotos = userPhotopaths;
-            //userForView.EveryAprovalStatus = everyStatus;
+            userForView.PhotoStatus = everyPhotoStatus;          
             return userForView;
         }
 
@@ -174,10 +168,11 @@ namespace TrivagoFinance.Ui.Controllers.Services
             if (userFromDb != null)
             {
                 //var status = _trivagoSqlRepository.EmployeeStatus(user.AprovalStatus, user.Id);
-                var status = _trivagoSqlRepository.EmployeeStatus(user.AprovalStatus, user.PhotoPath);
+                var status = _trivagoSqlRepository.EmployeeStatus(user.AprovalStatus, user.PhotoPath, user.Price);
                 if (status == AprovalStatus.Approved)
                 {
-                    var accounthing = _trivagoSqlRepository.GetAllEmployees().Where(x => x.Department == Department.Accounting); // Better logic for more then one accothing person
+                    var accounthing = _trivagoSqlRepository.GetAllEmployees().Where(x => x.Department == Department.Accounting); //TODO-Better logic for more then one accothing person
+                    
                     // Notify Finance
                     bool accNot = true;
                     foreach (var Finance in accounthing)
@@ -210,11 +205,18 @@ namespace TrivagoFinance.Ui.Controllers.Services
         {
             XSSFWorkbook wb = new XSSFWorkbook();
             ISheet sheet = wb.CreateSheet("Mysheet");
-            int i = 0;
+            int i = 1;
+            var c = sheet.CreateRow(0);
+            c.CreateCell(0).SetCellValue("NAME");
+            c.CreateCell(1).SetCellValue("LASTNAME");
+            c.CreateCell(2).SetCellValue("EMAIL");
+            c.CreateCell(3).SetCellValue("DEPARTAMENT");
+            c.CreateCell(4).SetCellValue("ROLE");
+            c.CreateCell(5).SetCellValue("COST");
             foreach (var item in approved)
             {
                 var r = sheet.CreateRow(i);
-
+              
                 r.CreateCell(0).SetCellValue(item.FirstName);
                 r.CreateCell(1).SetCellValue(item.LastName);
                 r.CreateCell(2).SetCellValue(item.Email);

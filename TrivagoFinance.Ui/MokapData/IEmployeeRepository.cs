@@ -16,7 +16,7 @@ namespace TrivagoFinance.Ui.MokapData
         User Delete(int Id);
         User GetUsersByEmailAndPassword(string email, string password);
         bool CheekForExistingEmail(string email);
-        AprovalStatus EmployeeStatus(AprovalStatus status, string photoPath);
+        AprovalStatus EmployeeStatus(AprovalStatus status, string photoPath, decimal price);
         Expense GetExpense(string photoPath);
         Expense InsertExpense(Expense foundExpense);
         IEnumerable<Expense> GetAllExpense();

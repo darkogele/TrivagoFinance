@@ -33,10 +33,11 @@ namespace TrivagoFinance.Ui.Data.Repository
             return user;
         }
 
-        public AprovalStatus EmployeeStatus(AprovalStatus status, string photoPath)
+        public AprovalStatus EmployeeStatus(AprovalStatus status, string photoPath, decimal price)
         {
             var expense = _trivagoDb.Expenses.Where(x => x.PhotoPath == photoPath).FirstOrDefault();
             expense.AprovalStatus = status;
+            expense.Price = price;
             _trivagoDb.Expenses.Update(expense);
             _trivagoDb.SaveChanges();
             return status;

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<UserVIewModel>
 
 @{
-    ViewData["Title"] = "Accounting";
+    ViewData["Title"] = "Accounting Page";
 }
 
 <h1>Accounting</h1>
 
 <table class="table table-bordered table-active">
-    <thead>
+    <thead class="table-dark">
         <tr>
             <td>First Name</td>
             <td>Last Name</td>
@@ -33,14 +33,11 @@
             <td>@item.Price</td>
         </tr>
         }
-
-
     </tbody>
-
 </table>
 
 <form asp-action="ExportToExcel" asp-controller="User" method="post">
     <input type="hidden" name="email" value="@ViewBag.Email" />
 
-    <button type="submit">Export To Excel</button>
+    <button type="submit" class="btn btn-info">Export To Excel</button>
 </form>

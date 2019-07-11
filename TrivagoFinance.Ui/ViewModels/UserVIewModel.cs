@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using TrivagoFinance.Ui.Data.DomainModels;
@@ -20,7 +21,7 @@ namespace TrivagoFinance.Ui.ViewModels
             Department = employee.Department;
             Email = employee.Email;
             UserRole = employee.UserRole;
-            Photo = ee.Photo;
+            //Photo = ee.Photo;
             PhotoPath = ee.PhotoPath;
             AprovalStatus = ee.AprovalStatus;
             Price = ee.Price;
@@ -48,8 +49,17 @@ namespace TrivagoFinance.Ui.ViewModels
         public decimal Price { get; set; }
         public IFormFile Photo { get; set; }
         public string PhotoPath { get; set; }
+    //public List<string> AllPhotos { get; set; }
         [DisplayName("Aproval Status")]
         public AprovalStatus AprovalStatus { get; set; }
+    //public List<AprovalStatus> EveryAprovalStatus { get; set; }
+        public List<PhotoStatus> PhotoStatus { get; set; }
+        public string Flag { get; set; }
+    }
+    public class PhotoStatus
+    {
+        public AprovalStatus AprovalStatus { get; set; }
+        public string PhotoPath { get; set; }
     }
 
     public enum UserRoles
@@ -65,11 +75,14 @@ namespace TrivagoFinance.Ui.ViewModels
         Training = 2,
         Marketing = 3,
         Legal = 4,
+        [Display(Name ="Human Resources")]
         HumanResources = 5,
         IT = 6,
+        [Display(Name = "Finance")]
         Accounting = 7,
         Support = 8,
-        WebDevelopers = 9
+        [Display(Name = "Web Developer")]
+        WebDeveloper = 9
     }
 
     public enum AprovalStatus

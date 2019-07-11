@@ -1,0 +1,26 @@
+﻿@model UserVIewModel
+@{
+    ViewData["Title"] = "New User Details";
+    var center = "style=text-align:center";
+    var msg = TempData["NewUser"];
+   
+}
+
+
+<div class="row justify-content-center m-2">
+    <div class="col" @center>
+        <div class="form-group">
+            <div>@msg</div>
+            <div>Name : @Model.FirstName</div>
+            <div>lastname : @Model.LastName</div>
+            <div>Role : @Model.UserRole</div>
+            <div>Department : @Model.Department</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col" @center>
+        <a asp-action="Employee" asp-controller="User" class="btn btn-primary">Home</a>
+    </div>
+</div>

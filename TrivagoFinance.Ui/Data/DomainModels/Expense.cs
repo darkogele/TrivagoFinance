@@ -26,13 +26,8 @@ namespace TrivagoFinance.Ui.Data.DomainModels
 
         [Key]
         public int Id { get; set; }
-
-        [NotMapped]
-        public IFormFile Photo { get; set; }
-        public string PhotoPath { get; set; }
-        [DisplayName("Aproval Status")]
+        public string PhotoPath { get; set; }   
         public AprovalStatus AprovalStatus { get; set; }
-
         public decimal Price { get; set; }
 
         public int UserId { get; set; }

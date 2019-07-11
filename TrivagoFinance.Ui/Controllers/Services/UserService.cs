@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using TrivagoFinance.Ui.Data.DomainModels;
 using TrivagoFinance.Ui.MokapData;
 using TrivagoFinance.Ui.ViewModels;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
 
 namespace TrivagoFinance.Ui.Controllers.Services
 {
@@ -23,6 +25,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
         bool Duplicate(string email);
         AprovalStatus ApproveStatus(UserVIewModel user);
         UserVIewModel GetEmployeeByEmail(string email);
+        byte[] ExcelFIle(IEnumerable<UserVIewModel> approved);
     }
 
     public class UserService : IUserService
@@ -61,8 +64,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
                     usersForView.Add(userModel);
                 }
             }
-
-            return usersForView.ToList();
+            return usersForView.Where(x=>x.Department == user.Department).ToList();
         }
 
         public UserVIewModel GetEmployee(int id)
@@ -80,7 +82,30 @@ namespace TrivagoFinance.Ui.Controllers.Services
         {
             var passwordHash = SHA256HashGenerator.GenerateHash(password);
             var userFromDb = _trivagoSqlRepository.GetUsersByEmailAndPassword(email, passwordHash);
+            if (userFromDb == null)
+            {
+                return null;
+            }
+            //TODO new lead none underhim
+            var userDataInExpense = _trivagoSqlRepository.GetAllExpense().Where(e => e.UserId == userFromDb.Id).ToList();                
+            if (userDataInExpense == null)
+            {
+                return new UserVIewModel() { Flag = "Zero" };
+            }
+            var everyPhotoStatus = new List<PhotoStatus>();
+            foreach (var data in userDataInExpense)
+            {
+                var photoStatus = new PhotoStatus
+                {
+                    PhotoPath = data.PhotoPath,
+                    AprovalStatus = data.AprovalStatus
+                };
+                everyPhotoStatus.Add(photoStatus);
+            }
             var userForView = _mapper.Map<UserVIewModel>(userFromDb);
+            userForView.PhotoStatus = everyPhotoStatus;
+            //userForView.AllPhotos = userPhotopaths;
+            //userForView.EveryAprovalStatus = everyStatus;
             return userForView;
         }
 
@@ -93,20 +118,20 @@ namespace TrivagoFinance.Ui.Controllers.Services
 
         public bool UploadPhoto(UserVIewModel user)
         {
-            var foundExpense = _trivagoSqlRepository.GetExpense(user.PhotoPath);
-            if (foundExpense?.PhotoPath != null)
-            {
-                // Delete previos Photo to save HDD/SSD space ,for keeping old photos comment this function
-                var filePath = Path.Combine(hostingEnvironment.WebRootPath + @"\images\Users\" + foundExpense.PhotoPath);
-                File.Delete(filePath);
-            }
-            foundExpense = new Expense(user);
-
-            foundExpense.AprovalStatus = AprovalStatus.Pending;
-            foundExpense.PhotoPath = ProcesUploadedFile(user);
+            //var foundExpense = _trivagoSqlRepository.GetExpense(user.PhotoPath);
+            //if (foundExpense?.PhotoPath != null)
+            //{
+            //    // Delete previos Photo to save HDD/SSD space ,for keeping old photos comment this function
+            //    var filePath = Path.Combine(hostingEnvironment.WebRootPath + @"\images\Users\" + foundExpense.PhotoPath);
+            //    File.Delete(filePath);
+            //}
             //var uploadStatus = _trivagoSqlRepository.UpdateExpense(foundExpense);
+            var foundExpense = new Expense(user)
+            {
+                AprovalStatus = AprovalStatus.Pending,
+                PhotoPath = ProcesUploadedFile(user)
+            };
             var uploadStatus = _trivagoSqlRepository.InsertExpense(foundExpense);
-
             return uploadStatus != null ? true : false;
         }
 
@@ -181,17 +206,39 @@ namespace TrivagoFinance.Ui.Controllers.Services
             return user.AprovalStatus;
         }
 
-        //public IEnumerable<UserVIewModel> GetAllEmployeesApproved(UserVIewModel user)
-        //{
-        //    _trivagoSqlRepository.GetAllEmployees().Where(x => x.AprovalStatus == AprovalStatus.Approved).ToList();
-        //}
+        public byte[] ExcelFIle(IEnumerable<UserVIewModel> approved)
+        {
+            XSSFWorkbook wb = new XSSFWorkbook();
+            ISheet sheet = wb.CreateSheet("Mysheet");
+            int i = 0;
+            foreach (var item in approved)
+            {
+                var r = sheet.CreateRow(i);
+
+                r.CreateCell(0).SetCellValue(item.FirstName);
+                r.CreateCell(1).SetCellValue(item.LastName);
+                r.CreateCell(2).SetCellValue(item.Email);
+                r.CreateCell(3).SetCellValue(item.Department.ToString());
+                r.CreateCell(4).SetCellValue(item.UserRole.ToString());
+                r.CreateCell(5).SetCellValue(item.Price.ToString());
+
+                i++;
+            }
+
+            byte[] fileContents = null;
+            using (var memoryStream = new MemoryStream())
+            {
+                wb.Write(memoryStream);
+                fileContents = memoryStream.ToArray();
+            }
+            return fileContents;
+        }
 
         public UserVIewModel GetEmployeeByEmail(string email)
         {
             var user = _trivagoSqlRepository.GetEmployee(email);
             return _mapper.Map<UserVIewModel>(user);
         }
-
 
         #region Private Methods
 

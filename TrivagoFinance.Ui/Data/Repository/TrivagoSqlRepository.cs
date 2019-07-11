@@ -89,13 +89,11 @@ namespace TrivagoFinance.Ui.Data.Repository
 
         public Expense InsertExpense(Expense foundExpense)
         {
-            var item = _trivagoDb.Expenses.SingleOrDefault();
-            if (item == null)
+            if (foundExpense != null)
             {
                 _trivagoDb.Expenses.Add(foundExpense);
                 _trivagoDb.SaveChanges();
-            }
-
+            }          
             return foundExpense;
         }
 

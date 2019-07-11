@@ -18,8 +18,7 @@
                     </div>
                     <img class="card-img-top imageThumbnail" src="@imagePath" asp-append-version="true" />
                     <div class="card-footer text-center">
-                        <a asp-controller="User" asp-action="Details" asp-route-id="@employee.Id" asp-for class="btn btn-primary m-1">Details</a>
-                        @*<a asp-controller="User" asp-action="" asp-route-id="@employee.Id" class="btn btn-danger m-1">Decline</a>*@
+                        <a asp-controller="User" asp-action="Details" asp-route-id="@employee.Id" asp-route-photoPath="@employee.PhotoPath" asp-for class="btn btn-primary m-1">Details</a>
                     </div>
                 </div>
             }
@@ -35,13 +34,13 @@
                     </div>
                     <img class="card-img-top imageThumbnail" src="@imagePath" asp-append-version="true" />
                     <div class="card-footer text-center">
-                        <a asp-controller="User" asp-action="Details" asp-route-id="@singleEmployee.Id" asp-for class="btn btn-primary m-1">Details</a>
-                        @*<a asp-controller="User" asp-action="" asp-route-id="@employee.Id" class="btn btn-danger m-1">Decline</a>*@
+                        <a asp-controller="User" asp-action="Details" asp-route-id="@singleEmployee.Id" asp-route-photoPath="@singleEmployee.PhotoPath" class="btn btn-primary m-1">Details</a>
                     </div>
                 </div>
             }
-
         }
+
+
         @if(Model.Count == 0)  
         {
             <div class="card m-3">

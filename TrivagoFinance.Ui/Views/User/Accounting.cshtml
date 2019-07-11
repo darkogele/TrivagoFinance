@@ -1,0 +1,46 @@
+﻿@model IEnumerable<UserVIewModel>
+
+@{
+    ViewData["Title"] = "Accounting";
+}
+
+<h1>Accounting</h1>
+
+<table class="table table-bordered table-active">
+    <thead>
+        <tr>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Department</td>
+            <td>Email</td>
+            <td>UserRole</td>
+            <td>AprovalStatus</td>
+            <td>Price</td>
+        </tr>
+
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.Department</td>
+            <td>@item.Email</td>
+            <td>@item.UserRole</td>
+            <td>@item.AprovalStatus</td>
+            <td>@item.Price</td>
+        </tr>
+        }
+
+
+    </tbody>
+
+</table>
+
+<form asp-action="ExportToExcel" asp-controller="User" method="post">
+    <input type="hidden" name="email" value="@ViewBag.Email" />
+
+    <button type="submit">Export To Excel</button>
+</form>

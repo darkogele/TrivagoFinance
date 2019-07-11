@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TrivagoFinance.Ui.ViewModels;
 using TrivagoFinance.Ui.Controllers.Services;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
 
 namespace TrivagoFinance.Ui.Controllers
 {
@@ -21,13 +23,7 @@ namespace TrivagoFinance.Ui.Controllers
         {
             return View();
         }
-
-        //[HttpGet]
-        //public IActionResult CreateEmployee()
-        //{           
-        //    return View();
-        //}
-
+      
         [HttpPost]
         public IActionResult CreateEmployee(UserVIewModel userVIewModel)
         {
@@ -63,6 +59,10 @@ namespace TrivagoFinance.Ui.Controllers
             {
                 return RedirectToAction("TeamLead", user);
             }
+            if (user.UserRole == UserRoles.Finance)
+            {
+                return RedirectToAction("Accounting", user);
+            }
            
             return View(user);
         }
@@ -81,7 +81,7 @@ namespace TrivagoFinance.Ui.Controllers
             return View();
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, string photoPath)
         {
             var user = _userService.GetEmployee(id);
             if (user == null)
@@ -89,6 +89,7 @@ namespace TrivagoFinance.Ui.Controllers
                 Response.StatusCode = 404;
                 return View("EmployeeNotFound", id);
             }
+            user.PhotoPath = photoPath;
             return View(user);
         }
 
@@ -102,6 +103,47 @@ namespace TrivagoFinance.Ui.Controllers
         {
             ViewBag.PhotoDone = _userService.UploadPhoto(model);
             return View(model); 
+        }
+
+        public IActionResult Accounting(UserVIewModel model)
+        {
+            ViewBag.Email = model.Email;
+            var approved = _userService.GetAllEmployeesApproved(model);
+            return View(approved);
+        }
+
+        [HttpPost]
+        public IActionResult ExportToExcel(string email)
+        {
+            var user = _userService.GetEmployeeByEmail(email);
+            var approved = _userService.GetAllEmployeesApproved(user);
+
+            XSSFWorkbook wb = new XSSFWorkbook();
+            ISheet sheet = wb.CreateSheet("Mysheet");
+            int i = 0;
+            foreach (var item in approved)
+            {
+                var r = sheet.CreateRow(i);
+
+                r.CreateCell(0).SetCellValue(item.FirstName);
+                r.CreateCell(1).SetCellValue(item.LastName);
+
+                r.CreateCell(2).SetCellValue(item.Email);
+                r.CreateCell(3).SetCellValue(item.Department.ToString());
+                r.CreateCell(4).SetCellValue(item.UserRole.ToString());
+                r.CreateCell(5).SetCellValue(item.Price.ToString());
+
+                i++;
+            }
+
+            byte[] fileContents = null;
+            using (var memoryStream = new MemoryStream())
+            {
+                wb.Write(memoryStream);
+                fileContents = memoryStream.ToArray();
+            }
+
+            return File(fileContents, System.Net.Mime.MediaTypeNames.Application.Octet, "report.xlsx");
         }
 
     }

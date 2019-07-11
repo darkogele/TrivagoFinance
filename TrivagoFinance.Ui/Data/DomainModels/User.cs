@@ -19,8 +19,9 @@ namespace TrivagoFinance.Ui.Data.DomainModels
         public string LastName { get; set; }
         public UserRoles UserRole { get; set; }
         public Department Department { get; set; }
-        public string PhotoPath { get; set; }
-        
-        public AprovalStatus AprovalStatus { get; set; }
+        //public string PhotoPath { get; set; }
+
+        //public AprovalStatus AprovalStatus { get; set; }
+        public List<Expense> Expenses { get; set; }
     }
 }

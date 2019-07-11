@@ -1,11 +1,31 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using TrivagoFinance.Ui.Data.DomainModels;
 
 namespace TrivagoFinance.Ui.ViewModels
 {
     public class UserVIewModel
     {
+        public UserVIewModel()
+        {
+
+        }
+
+        public UserVIewModel(User employee, Expense ee)
+        {
+            Id = employee.Id;
+            FirstName = employee.FirstName;
+            LastName = employee.LastName;
+            Department = employee.Department;
+            Email = employee.Email;
+            UserRole = employee.UserRole;
+            Photo = ee.Photo;
+            PhotoPath = ee.PhotoPath;
+            AprovalStatus = ee.AprovalStatus;
+            Price = ee.Price;
+        }
+
         [Key]
         public int Id { get; set; }
         [MaxLength(50, ErrorMessage = "Name cannot exceed 50 characters")]
@@ -24,6 +44,8 @@ namespace TrivagoFinance.Ui.ViewModels
         public UserRoles UserRole { get; set; }
         [Required]
         public Department Department { get; set; }
+
+        public decimal Price { get; set; }
         public IFormFile Photo { get; set; }
         public string PhotoPath { get; set; }
         [DisplayName("Aproval Status")]

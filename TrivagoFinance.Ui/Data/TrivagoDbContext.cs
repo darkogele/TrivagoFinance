@@ -8,12 +8,12 @@ using TrivagoFinance.Ui.Data.DomainModels;
 
 namespace TrivagoFinance.Ui.Data
 {
-    public class TrivagoDbContext: DbContext
+    public class TrivagoDbContext : DbContext
     {
-        public TrivagoDbContext(DbContextOptions<TrivagoDbContext>options):base(options)
+        public TrivagoDbContext(DbContextOptions<TrivagoDbContext> options) : base(options)
         { }
-       public DbSet<User> Users { get; set; }
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

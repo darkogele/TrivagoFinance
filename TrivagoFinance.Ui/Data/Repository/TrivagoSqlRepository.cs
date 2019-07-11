@@ -33,13 +33,18 @@ namespace TrivagoFinance.Ui.Data.Repository
             return user;
         }
 
-        public AprovalStatus EmployeeStatus(AprovalStatus status, int id)
+        public AprovalStatus EmployeeStatus(AprovalStatus status, string photoPath)
         {
-            var user = _trivagoDb.Users.Find(id);
-            user.AprovalStatus = status;
-            _trivagoDb.Users.Update(user);
+            var expense = _trivagoDb.Expenses.Where(x => x.PhotoPath == photoPath).FirstOrDefault();
+            expense.AprovalStatus = status;
+            _trivagoDb.Expenses.Update(expense);
             _trivagoDb.SaveChanges();
             return status;
+        }
+
+        public IEnumerable<Expense> GetAllExpense()
+        {
+            return _trivagoDb.Expenses.ToList();
         }
 
         public IEnumerable<User> GetAllEmployees()
@@ -52,10 +57,15 @@ namespace TrivagoFinance.Ui.Data.Repository
             return _trivagoDb.Users.Find(Id);
         }
 
-        // SEND SHA256 before
-        public User GetUsersByEmailAndPassword(string email, string password) 
+        public Expense GetExpense(string photoPath)
         {
-            return _trivagoDb.Users.FirstOrDefault(x => x.Email == email && x.PasswordHash == password); 
+            return _trivagoDb.Expenses.SingleOrDefault(x => x.PhotoPath == photoPath);
+        }
+
+        // SEND SHA256 before
+        public User GetUsersByEmailAndPassword(string email, string password)
+        {
+            return _trivagoDb.Users.FirstOrDefault(x => x.Email == email && x.PasswordHash == password);
         }
 
         public User Insert(User employee)
@@ -71,10 +81,32 @@ namespace TrivagoFinance.Ui.Data.Repository
             var user = _trivagoDb.Users.Find(employeeChanges.Id);
             if (user != null)
             {
-                _trivagoDb.Users.Update(employeeChanges); 
+                _trivagoDb.Users.Update(employeeChanges);
                 _trivagoDb.SaveChanges();
             }
             return user;
+        }
+
+        public Expense InsertExpense(Expense foundExpense)
+        {
+            var item = _trivagoDb.Expenses.SingleOrDefault();
+            if (item == null)
+            {
+                _trivagoDb.Expenses.Add(foundExpense);
+                _trivagoDb.SaveChanges();
+            }
+
+            return foundExpense;
+        }
+
+        public IEnumerable<Expense> GetPendingExpense()
+        {
+            return _trivagoDb.Expenses.Where(e => e.AprovalStatus == AprovalStatus.Pending);
+        }
+
+        public User GetEmployee(string email)
+        {
+            return _trivagoDb.Users.FirstOrDefault(x => x.Email == email);
         }
     }
 }

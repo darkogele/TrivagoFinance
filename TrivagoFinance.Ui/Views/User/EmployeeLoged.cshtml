@@ -13,7 +13,7 @@
     @foreach (var user in Model.PhotoStatus)
     {
         var color = @"style=text-align:center;color:";
-        var photoPath = Url.Content("~/images/users/" + (user.PhotoPath ?? "noimage.jpg"));
+        var photoPath = Url.Content("~/images/users/" + (user.PhotoPath ?? "noimage.png"));
         if (user.AprovalStatus == AprovalStatus.Pending)
         {
             color += "gold";
@@ -35,10 +35,12 @@
             <img src="@photoPath" class="rounded img-fluid" asp-append-version="true" style="color:yellow;text-align:center" />
         </div>
     }
+
     @if (Model.PhotoStatus.Count == 0)
     {
         <div class="col">
             <h3>Upload receipt Photo bellow</h3>
+            <img src="~/images/Users/noimage.png" />
         </div>
     }
 

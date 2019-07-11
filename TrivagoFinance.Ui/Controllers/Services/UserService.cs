@@ -143,7 +143,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
         {
             var userModels = new List<UserVIewModel>();
             var employees = _trivagoSqlRepository.GetAllEmployees();
-            var exp = _trivagoSqlRepository.GetAllExpense();
+            var exp = _trivagoSqlRepository.GetAllExpense().Where(x => x.AprovalStatus != AprovalStatus.Pending);
             foreach (var employee in employees)
             {
                 var employeeExpenses = exp.Where(x => x.UserId == employee.Id).ToList();

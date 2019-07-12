@@ -5,9 +5,6 @@ using MimeKit;
 using MimeKit.Text;
 using System;
 using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace TrivagoFinance.Ui.Controllers.Services
 {
@@ -40,9 +37,9 @@ namespace TrivagoFinance.Ui.Controllers.Services
                     //client.LocalDomain = ec.LocalDomain;
                     client.CheckCertificateRevocation = false;
 
-                // IF you enconter problems with the email sending for SSL or TLS connection remove the comment from the lines bellow;
-                    //client.ServerCertificateValidationCallback = (object sender, 
-                    //    X509Certificate certificate, 
+                    // IF you enconter problems with the email sending for SSL or TLS connection remove the comment from the lines bellow;
+                    //client.ServerCertificateValidationCallback = (object sender,
+                    //    X509Certificate certificate,
                     //    X509Chain chain,
                     //    SslPolicyErrors sslPolicyErrors) => true;
 
@@ -76,5 +73,4 @@ namespace TrivagoFinance.Ui.Controllers.Services
         public String UserId { get; set; }
         public String UserPassword { get; set; }
     }
-
 }

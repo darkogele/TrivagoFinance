@@ -9,8 +9,8 @@ using TrivagoFinance.Ui.Data;
 namespace TrivagoFinance.Ui.Migrations
 {
     [DbContext(typeof(TrivagoDbContext))]
-    [Migration("20190710184921_changesToDb")]
-    partial class changesToDb
+    [Migration("20190712101721_inital")]
+    partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,13 +20,32 @@ namespace TrivagoFinance.Ui.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TrivagoFinance.Ui.Data.DomainModels.User", b =>
+            modelBuilder.Entity("TrivagoFinance.Ui.Data.DomainModels.Expense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AprovalStatus");
+
+                    b.Property<string>("PhotoPath");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("TrivagoFinance.Ui.Data.DomainModels.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Department");
 
@@ -39,8 +58,6 @@ namespace TrivagoFinance.Ui.Migrations
 
                     b.Property<string>("PasswordHash");
 
-                    b.Property<string>("PhotoPath");
-
                     b.Property<int>("UserRole");
 
                     b.HasKey("Id");
@@ -51,19 +68,16 @@ namespace TrivagoFinance.Ui.Migrations
                         new
                         {
                             Id = 1,
-                            AprovalStatus = 0,
                             Department = 9,
-                            Email = "darkogele@hotmail.com",
-                            FirstName = "Darko",
-                            LastName = "Gelevski",
-                            PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",
-                            PhotoPath = "895d0fe3-076c-4124-8eb9-ab5424175abb_24909662_10157239995384896_4609835183655791985_n.jpg",
+                            Email = "employee@trivago.com",
+                            FirstName = "John",
+                            LastName = "Do",
+                            PasswordHash = "2FDC0177057D3A5C6C2C0821E01F4FA8D90F9A3BB7AFD82B0DB526AF98D68DE8",
                             UserRole = 1
                         },
                         new
                         {
                             Id = 2,
-                            AprovalStatus = 0,
                             Department = 9,
                             Email = "lead@trivago.com",
                             FirstName = "Lead",
@@ -74,38 +88,41 @@ namespace TrivagoFinance.Ui.Migrations
                         new
                         {
                             Id = 3,
-                            AprovalStatus = 0,
                             Department = 7,
                             Email = "finance@trivago.com",
                             FirstName = "Finance",
                             LastName = "FinanceGuy",
-                            PasswordHash = "b696d75511dc16f2b52563e3113a498311a79866f4672862197aa9a8c5c0da12",
+                            PasswordHash = "EAB762A03FD979A04CC4706E6536D382BC89D2D1356AFCD054A16B2235ECD471",
                             UserRole = 3
                         },
                         new
                         {
                             Id = 4,
-                            AprovalStatus = 0,
                             Department = 9,
                             Email = "employee2@trivago.com",
                             FirstName = "John",
                             LastName = "Smith",
                             PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",
-                            PhotoPath = "b8aaa1a4-22fc-4b66-8f9f-a3da69a2de7a_travel_expense_report.png",
                             UserRole = 1
                         },
                         new
                         {
                             Id = 5,
-                            AprovalStatus = 0,
                             Department = 9,
-                            Email = "employee2@trivago.com",
+                            Email = "employee3@trivago.com",
                             FirstName = "Rebeka",
                             LastName = "Week",
                             PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",
-                            PhotoPath = "b8aaa1a4-22fc-4b66-8f9f-a3da69a2de7a_travel_expense_report.png",
                             UserRole = 1
                         });
+                });
+
+            modelBuilder.Entity("TrivagoFinance.Ui.Data.DomainModels.Expense", b =>
+                {
+                    b.HasOne("TrivagoFinance.Ui.Data.DomainModels.User", "User")
+                        .WithMany("Expenses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

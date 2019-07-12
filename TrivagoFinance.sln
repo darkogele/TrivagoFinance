@@ -13,13 +13,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. TrivagoFinance.Core", "0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. TrivagoFinance.UI", "4. TrivagoFinance.UI", "{F8574275-CEA3-42A3-ADC1-88B305F10723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Data", "TrivagoFinance.Data\TrivagoFinance.Data.csproj", "{17EFB8F0-8283-4F61-BAF5-E593DF76255C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrivagoFinance.Data", "TrivagoFinance.Data\TrivagoFinance.Data.csproj", "{17EFB8F0-8283-4F61-BAF5-E593DF76255C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Repository", "TrivagoFinance.Repository\TrivagoFinance.Repository.csproj", "{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrivagoFinance.Repository", "TrivagoFinance.Repository\TrivagoFinance.Repository.csproj", "{BFD1D2CE-7CB8-4929-9C24-959E57DB62CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Ui", "TrivagoFinance.Ui\TrivagoFinance.Ui.csproj", "{33B41B93-FEA3-406D-89C0-EC1012C74BFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrivagoFinance.Ui", "TrivagoFinance.Ui\TrivagoFinance.Ui.csproj", "{33B41B93-FEA3-406D-89C0-EC1012C74BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrivagoFinance.Service", "TrivagoFinance.Service\TrivagoFinance.Service.csproj", "{34362015-44D0-489B-AD3F-F7B864B9EF8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrivagoFinance.Service", "TrivagoFinance.Service\TrivagoFinance.Service.csproj", "{34362015-44D0-489B-AD3F-F7B864B9EF8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{685CFF44-A967-4342-9860-184FC507DC5B}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

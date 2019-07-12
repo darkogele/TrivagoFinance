@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TrivagoFinance.Ui.Data.SeedData;
 using TrivagoFinance.Ui.Data.DomainModels;
+using TrivagoFinance.Ui.Data.SeedData;
 
 namespace TrivagoFinance.Ui.Data
 {
@@ -12,8 +8,10 @@ namespace TrivagoFinance.Ui.Data
     {
         public TrivagoDbContext(DbContextOptions<TrivagoDbContext> options) : base(options)
         { }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Expense> Expenses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

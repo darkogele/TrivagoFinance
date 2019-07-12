@@ -6,17 +6,15 @@
     <div class="col" style="text-align:center">
         @if (ViewBag.PhotoDone != null)
         {
-            <h3>Your Photo was uploaded</h3>
-            <p></p>
-            <a class="btn btn-primary" asp-controller="User" asp-action="Employee">Home</a>
+        <h3>Your Photo was uploaded</h3>
+        <p></p>
+        <a class="btn btn-primary" asp-controller="User" asp-action="Employee">Home</a>
         }
         else if (ViewBag.PhotoFailed != null)
         {
-            <h3>Status: <span style="color:red">@ViewBag.PhotoFailed</span></h3>
-            <p></p>
-            <a class="btn btn-primary" asp-controller="User" asp-action="Employee">Home</a>
-        }     
+        <h3>Status: <span style="color:red">@ViewBag.PhotoFailed</span></h3>
+        <p></p>
+        <a class="btn btn-primary" asp-controller="User" asp-action="Employee">Home</a>
+        }
     </div>
 </div>
-
-

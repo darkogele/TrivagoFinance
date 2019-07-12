@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TrivagoFinance.Ui.Data.DomainModels;
 using TrivagoFinance.Ui.MokapData;
 using TrivagoFinance.Ui.ViewModels;
@@ -11,6 +9,7 @@ namespace TrivagoFinance.Ui.Data.Repository
     public class TrivagoSqlRepository : IEmployeeRepository
     {
         private TrivagoDbContext _trivagoDb;
+
         public TrivagoSqlRepository(TrivagoDbContext trivagoDb)
         {
             _trivagoDb = trivagoDb;
@@ -88,13 +87,14 @@ namespace TrivagoFinance.Ui.Data.Repository
             return user;
         }
 
+        // Foreign key from user 
         public Expense InsertExpense(Expense foundExpense)
         {
             if (foundExpense != null)
             {
                 _trivagoDb.Expenses.Add(foundExpense);
                 _trivagoDb.SaveChanges();
-            }          
+            }
             return foundExpense;
         }
 

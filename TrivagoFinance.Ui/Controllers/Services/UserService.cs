@@ -1,31 +1,41 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using TrivagoFinance.Ui.Data.DomainModels;
 using TrivagoFinance.Ui.MokapData;
 using TrivagoFinance.Ui.ViewModels;
-using NPOI.XSSF.UserModel;
-using NPOI.SS.UserModel;
 
 namespace TrivagoFinance.Ui.Controllers.Services
 {
     public interface IUserService
     {
         UserVIewModel LogIn(string email, string password);
+
         IEnumerable<UserVIewModel> GetAllEmployees(UserVIewModel user);
+
         IEnumerable<UserVIewModel> GetAllEmployeesApproved(UserVIewModel user);
+
         UserVIewModel Update(UserVIewModel user);
+
         UserVIewModel GetEmployee(int id);
+
         bool UploadPhoto(UserVIewModel user);
+
         UserVIewModel Insert(UserVIewModel user);
+
         bool Duplicate(string email);
+
         AprovalStatus ApproveStatus(UserVIewModel user);
+
         UserVIewModel GetEmployeeByEmail(string email);
+
         byte[] ExcelFIle(IEnumerable<UserVIewModel> approved);
+
         UserVIewModel LogedUser(int id);
     }
 
@@ -45,12 +55,12 @@ namespace TrivagoFinance.Ui.Controllers.Services
         }
 
         public IEnumerable<UserVIewModel> GetAllEmployees(UserVIewModel user)
-        {      
+        {
             var pendingExpenses = _trivagoSqlRepository.GetPendingExpense();
 
             var usersFromDb = _trivagoSqlRepository.GetAllEmployees()
                 .Where(e => pendingExpenses.Any(p => e.Id == p.UserId)).ToList();
-          
+
             var usersForView = new List<UserVIewModel>();
 
             foreach (var employee in usersFromDb)
@@ -62,7 +72,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
                     usersForView.Add(userModel);
                 }
             }
-            return usersForView.Where(x=>x.Department == user.Department).ToList();
+            return usersForView.Where(x => x.Department == user.Department).ToList();
         }
 
         public UserVIewModel GetEmployee(int id)
@@ -83,9 +93,9 @@ namespace TrivagoFinance.Ui.Controllers.Services
             if (userFromDb == null)
             {
                 return null;
-            }         
+            }
             var userDataInExpense = _trivagoSqlRepository.GetAllExpense()
-                .Where(e => e.UserId == userFromDb.Id).ToList();                
+                .Where(e => e.UserId == userFromDb.Id).ToList();
             if (userDataInExpense == null)
             {
                 return new UserVIewModel() { Flag = "Zero" };
@@ -101,15 +111,15 @@ namespace TrivagoFinance.Ui.Controllers.Services
                 everyPhotoStatus.Add(photoStatus);
             }
             var userForView = _mapper.Map<UserVIewModel>(userFromDb);
-            userForView.PhotoStatus = everyPhotoStatus;          
+            userForView.PhotoStatus = everyPhotoStatus;
             return userForView;
         }
 
         public UserVIewModel LogedUser(int id)
         {
             var user = _trivagoSqlRepository.GetEmployee(id);
-            var exp = _trivagoSqlRepository.GetAllExpense().Where(x=>x.UserId == user.Id).ToList();
-            var everyPhotoStatus = new List<PhotoStatus>();           
+            var exp = _trivagoSqlRepository.GetAllExpense().Where(x => x.UserId == user.Id).ToList();
+            var everyPhotoStatus = new List<PhotoStatus>();
             foreach (var item in exp)
             {
                 var photoStatus = new PhotoStatus
@@ -123,7 +133,6 @@ namespace TrivagoFinance.Ui.Controllers.Services
             Loged.PhotoStatus = everyPhotoStatus;
             return Loged;
         }
-
 
         public UserVIewModel Update(UserVIewModel UserVIewModel)
         {
@@ -185,7 +194,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
                 if (status == AprovalStatus.Approved)
                 {
                     var accounthing = _trivagoSqlRepository.GetAllEmployees().Where(x => x.Department == Department.Accounting); //TODO-Better logic for more then one accothing person
-                    
+
                     // Notify Finance
                     bool accNot = true;
                     foreach (var Finance in accounthing)
@@ -229,7 +238,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
             foreach (var item in approved)
             {
                 var r = sheet.CreateRow(i);
-              
+
                 r.CreateCell(0).SetCellValue(item.FirstName);
                 r.CreateCell(1).SetCellValue(item.LastName);
                 r.CreateCell(2).SetCellValue(item.Email);
@@ -288,9 +297,6 @@ namespace TrivagoFinance.Ui.Controllers.Services
             return contains;
         }
 
-       
-
-
-        #endregion
+        #endregion Private Methods
     }
 }

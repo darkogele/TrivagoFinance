@@ -1,22 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using TrivagoFinance.Ui.Data.DomainModels;
+﻿using System.ComponentModel.DataAnnotations;
 using TrivagoFinance.Ui.ViewModels;
 
 namespace TrivagoFinance.Ui.Data.DomainModels
 {
     public class Expense
     {
-
         public Expense()
         {
-
         }
 
         public Expense(UserVIewModel user)
@@ -26,12 +16,12 @@ namespace TrivagoFinance.Ui.Data.DomainModels
 
         [Key]
         public int Id { get; set; }
-        public string PhotoPath { get; set; }   
+
+        public string PhotoPath { get; set; }
         public AprovalStatus AprovalStatus { get; set; }
         public decimal Price { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }
-
     }
 }

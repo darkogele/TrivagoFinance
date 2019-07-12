@@ -1,20 +1,18 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "TeamLead Approval Page";
     var status = ViewBag.Status;
 }
 
 @if (status == AprovalStatus.Approved)
 {
-    <h3>Email was sent to Accounting with your apporval</h3>
-    <p>You are great Team Lead the employees must love :)</p>
+<h3>Email was sent to Accounting with your apporval</h3>
+<p>You are great Team Lead the employees must love :)</p>
 }
 else if (status == AprovalStatus.Declined)
 {
-    <h3>Request was declined</h3>
+<h3>Request was declined</h3>
 }
 else
 {
-    <h3>Request still pending </h3>
+<h3>Request still pending </h3>
 }
-

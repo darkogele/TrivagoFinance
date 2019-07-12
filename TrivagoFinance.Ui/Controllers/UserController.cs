@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TrivagoFinance.Ui.ViewModels;
-using TrivagoFinance.Ui.Controllers.Services;
-using NPOI.XSSF.UserModel;
-using NPOI.SS.UserModel;
+using System;
+using System.Linq;
 using System.Net.Mime;
-using Microsoft.AspNetCore.Http;
+using TrivagoFinance.Ui.Controllers.Services;
+using TrivagoFinance.Ui.ViewModels;
 
 namespace TrivagoFinance.Ui.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -165,5 +161,9 @@ namespace TrivagoFinance.Ui.Controllers
             return File(fileContents, MediaTypeNames.Application.Octet, "report.xlsx");
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
     }
 }

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Trivago Finance";
     var error = TempData["Error"];
 }
-<h3 style="text-align:center">Travel Expense</h3>
+<h3 style="text-align:center">Travel Expense App</h3>
 @if (error != null && error.ToString() != "")
 {
     <h3 style="text-align:center" class="text-danger">@error</h3>
@@ -23,15 +23,13 @@
                 <input asp-for="Password" type="password" class="form-control" id="inputPassword" placeholder="Password">
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                    <label class="form-check-label"><input type="checkbox">Remember me</label>
-                </div>*@
 
             <div class="form-group row">
                 <button type="submit" class="btn btn-primary">Log in</button>
             </div>
-
+            @*<img src="~/images/trivago.png" style="width:100%" />*@ @*for extra logo*@ 
         </form>
+
     </div>
     <div class="col-2"></div>
     <div class="col-5">
@@ -74,7 +72,6 @@
                 <span asp-validation-for="UserRole" class="text-danger"></span>
             </div>
 
-
             <div class="form-group row">
                 <select asp-for="Department" asp-items="Html.GetEnumSelectList<Department>()" class="form-control">
                     <option value="">Please select Department</option>
@@ -85,7 +82,13 @@
             <div class="form-group row">
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>
-
         </form>
     </div>
 </div>
+
+<style type="text/css">
+    body {       
+        background-color: #F2F2F2;
+    }
+</style>
+

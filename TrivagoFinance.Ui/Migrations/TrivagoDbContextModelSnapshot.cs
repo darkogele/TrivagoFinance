@@ -67,10 +67,10 @@ namespace TrivagoFinance.Ui.Migrations
                         {
                             Id = 1,
                             Department = 9,
-                            Email = "darkogele@hotmail.com",
-                            FirstName = "Darko",
-                            LastName = "Gelevski",
-                            PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",
+                            Email = "employee@trivago.com",
+                            FirstName = "John",
+                            LastName = "Do",
+                            PasswordHash = "2FDC0177057D3A5C6C2C0821E01F4FA8D90F9A3BB7AFD82B0DB526AF98D68DE8",
                             UserRole = 1
                         },
                         new
@@ -90,7 +90,7 @@ namespace TrivagoFinance.Ui.Migrations
                             Email = "finance@trivago.com",
                             FirstName = "Finance",
                             LastName = "FinanceGuy",
-                            PasswordHash = "b696d75511dc16f2b52563e3113a498311a79866f4672862197aa9a8c5c0da12",
+                            PasswordHash = "EAB762A03FD979A04CC4706E6536D382BC89D2D1356AFCD054A16B2235ECD471",
                             UserRole = 3
                         },
                         new
@@ -107,7 +107,7 @@ namespace TrivagoFinance.Ui.Migrations
                         {
                             Id = 5,
                             Department = 9,
-                            Email = "employee2@trivago.com",
+                            Email = "employee3@trivago.com",
                             FirstName = "Rebeka",
                             LastName = "Week",
                             PasswordHash = "e823a44aca1edda7551208a4c1c1559f61d30a821862b311df3a76ab2b901bce",

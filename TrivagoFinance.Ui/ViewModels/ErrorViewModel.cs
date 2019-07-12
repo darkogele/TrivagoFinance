@@ -1,5 +1,3 @@
-using System;
-
 namespace TrivagoFinance.Ui.ViewModels
 {
     public class ErrorViewModel

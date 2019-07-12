@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TrivagoFinance.Ui.Controllers.Services
 {
@@ -20,7 +16,7 @@ namespace TrivagoFinance.Ui.Controllers.Services
                     builder.Append(bytes[i].ToString("x2"));
                 }
                 return builder.ToString();
-            } 
+            }
         }
     }
 }

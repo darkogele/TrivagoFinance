@@ -3,12 +3,18 @@
     ViewData["Title"] = "EmployeeLoged";
 }
 
-<div class="row" style="text-align:center">
+<div class="row" style="text-align:">
     <div class="col">
-        <h1>Welcome @Model.FirstName </h1>
+        <h3>Welcome @Model.FirstName  <span style="font-size:20px"><a class="nav-link text-dark float-right my-2 my-sm-0" asp-area="" asp-controller="User" asp-action="LogOut">Log Out</a></span></h3>
+        @*@if (HttpContextAccessor.HttpContext.Request.Cookies["TrivagoCookie"] != null)
+            {*@
+       
+            
+         
+
     </div>
 </div>
-
+<br />
 <div class="row" style="text-align:center">
     @foreach (var user in Model.PhotoStatus)
     {

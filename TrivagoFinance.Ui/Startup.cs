@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using TrivagoFinance.Ui.Controllers.Services;
 using TrivagoFinance.Ui.Data;
 using TrivagoFinance.Ui.Data.Repository;
@@ -26,10 +28,12 @@ namespace TrivagoFinance.Ui
         {
             Configuration = configuration;
         }
-      
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => {});
            
             services.AddDbContextPool<TrivagoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TrivagoData")));// Conection String Found in Appsettings.json
             services.AddScoped<IEmployeeRepository, TrivagoSqlRepository>(); // Dependency injection

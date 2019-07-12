@@ -9,6 +9,7 @@ using TrivagoFinance.Ui.Controllers.Services;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Http;
 
 namespace TrivagoFinance.Ui.Controllers
 {
@@ -22,9 +23,14 @@ namespace TrivagoFinance.Ui.Controllers
 
         public IActionResult Employee()
         {
+            var responce = Request.Cookies["trivagoCookie"];
+            if (responce != null)
+            {
+                return RedirectToAction("AlreadyLoged", new { id = responce });
+            }
             return View();
         }
-      
+
         [HttpPost]
         public IActionResult CreateEmployee(UserVIewModel userVIewModel)
         {
@@ -43,7 +49,7 @@ namespace TrivagoFinance.Ui.Controllers
                 TempData["Error"] = "You are entering existing email address try with different one";
                 return View("Employee");
             }
-            var error =  ModelState.Values.SelectMany(x => x.Errors).FirstOrDefault();
+            var error = ModelState.Values.SelectMany(x => x.Errors).FirstOrDefault();
             TempData["Error"] = error != null ? error.ErrorMessage : "";
             return View("Employee");
         }
@@ -57,7 +63,14 @@ namespace TrivagoFinance.Ui.Controllers
         [HttpPost]
         public IActionResult EmployeeLoged(string email, string password)
         {
-            var user = _userService.LogIn(email, password);          
+            var user = _userService.LogIn(email, password);
+
+            CookieOptions coockie = new CookieOptions();
+            coockie.Expires = DateTime.Now.AddDays(10);
+            if (user != null)
+            {
+                Response.Cookies.Append("TrivagoCookie", user.Id.ToString(), coockie);
+            }
             if (user == null)
             {
                 return RedirectToAction("WrongCredential");
@@ -69,17 +82,33 @@ namespace TrivagoFinance.Ui.Controllers
             if (user.UserRole == UserRoles.Finance)
             {
                 return RedirectToAction("Accounting", user);
-            }          
+            }
             return View(user);
+        }
+
+        public IActionResult AlreadyLoged(int id)
+        {
+            var user = _userService.LogedUser(id);
+            return View("EmployeeLoged", user);
+        }
+
+        public IActionResult LogOut()
+        {
+            if (Request.Cookies["TrivagoCookie"] != null)
+            {
+                CookieOptions coockie = new CookieOptions();
+                coockie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Append("TrivagoCookie", "", coockie);
+            }
+            return RedirectToAction("Employee");
         }
 
         public IActionResult TeamLead(UserVIewModel lead)
         {
             var users = _userService.GetAllEmployees(lead);
-           // var my = users.Where(x => x.Department == lead.Department);
             return View(users);
         }
-       
+
         [HttpPost]
         public IActionResult TeamLeadApproval(UserVIewModel employee)
         {
@@ -116,7 +145,7 @@ namespace TrivagoFinance.Ui.Controllers
             {
                 ViewBag.PhotoFailed = "You are not submitting Photo go back and try again";
             }
-            return View(model); 
+            return View(model);
         }
 
         public IActionResult Accounting(UserVIewModel model)
@@ -132,32 +161,8 @@ namespace TrivagoFinance.Ui.Controllers
             var user = _userService.GetEmployeeByEmail(email);
             var approved = _userService.GetAllEmployeesApproved(user);
             var fileContents = _userService.ExcelFIle(approved);
-            //XSSFWorkbook wb = new XSSFWorkbook();
-            //ISheet sheet = wb.CreateSheet("Mysheet");
-            //int i = 0;
-            //foreach (var item in approved)
-            //{
-            //    var r = sheet.CreateRow(i);
 
-            //    r.CreateCell(0).SetCellValue(item.FirstName);
-            //    r.CreateCell(1).SetCellValue(item.LastName);
-
-            //    r.CreateCell(2).SetCellValue(item.Email);
-            //    r.CreateCell(3).SetCellValue(item.Department.ToString());
-            //    r.CreateCell(4).SetCellValue(item.UserRole.ToString());
-            //    r.CreateCell(5).SetCellValue(item.Price.ToString());
-
-            //    i++;
-            //}
-
-            //byte[] fileContents = null;
-            //using (var memoryStream = new MemoryStream())
-            //{
-            //    wb.Write(memoryStream);
-            //    fileContents = memoryStream.ToArray();
-            //}
-
-            return File(fileContents,MediaTypeNames.Application.Octet, "report.xlsx");
+            return File(fileContents, MediaTypeNames.Application.Octet, "report.xlsx");
         }
 
     }
